@@ -12,9 +12,11 @@ async fn main() {
 
         tokio::spawn(async move {
             let mut buf = vec![0u8; 1024];
+
             let read = socket.read(&mut buf).await.unwrap();
             let message = String::from_utf8_lossy(&buf[..read]);
             println!("Received: {message}");
+
             socket.write_all(b"Hello from ferrolink!\n").await.unwrap();
         });
     }
